@@ -150,6 +150,8 @@ Options
                             - modules -- counts of beans to create
                             - profile_opts -- redefines of settings listed here 
                         In case of setting profile (this setting) setting -l (load factor) will be ignored.
+                        
+    --seed              Generate the same data given the same mt_srand seed value, seed - integer value
 
     "Powered by SugarCRM"
 
@@ -185,6 +187,7 @@ $opts = getopt(
         'iterator:',
         'insert_batch_size:',
         'profile:',
+        'seed:'
     )
 );
 
@@ -378,6 +381,16 @@ if (isset($opts['d'])) {
 
 if (!isset($opts['with-favorites'])) {
     unset($modules['SugarFavorites']);
+}
+
+if (isset($opts['seed'])) {
+    if (is_numeric($opts['seed'])) {
+        $GLOBALS['seed'] = intval($opts['seed']);
+        mt_srand($GLOBALS['seed']);
+    }
+    else {
+        exitWithError('Seed value should be integer');
+    }
 }
 
 $maxTeamsPerSet = (!empty($opts['s'])) ? $opts['s'] : $defaultMaxTeamsPerSet;
