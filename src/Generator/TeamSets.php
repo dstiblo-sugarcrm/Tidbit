@@ -203,7 +203,7 @@ class TeamSets extends \TeamSet
     {
         $stats = $this->_getStatistics($teams);
         $team_md5 = $stats['team_md5'];
-        $teams = $stats['teams_id'];
+        $teams = $stats['team_ids'];
 
         if (!in_array($team_md5, $this->teamMd5Array)) {
             if (count($teams) == 1) {
